@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Registro</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
+    </head>
+
+    <body>
+        <div class="header">
+            <h1> Cadastro </h1>
+        </div>
+
+        <div class="erro">
+            <h3> Não foi possível realizar o cadastro, por favor tente novamente.</h3>
+        </div>
+
+        <form method="post" action="/">
+            <div class="input-group">
+                <label><p class="cent">Usuário</p></label><br>
+                <input type="text" name="usuario">
+            </div>
+
+            <div class="input-group">
+                <label><p class="cent">Email</p></label><br>
+                <input type="email" name="email">
+            </div>
+
+            <div class="input-group">
+                <label><p class="cent">DRE</p></label><br>
+                <input type="number" name="DRE">
+            </div>
+
+            <div class="input-group">
+                <label><p class="cent">Senha</p></label><br>
+                <input type="password" name="senha_1">
+            </div>
+
+            <div class="input-group">
+                <label><p class="cent">Confirmação de senha</p></label><br>
+                <input type="password" name="senha_2"
+            </div>
+
+            <div class="input-group">
+                <button type="submit" class="btn" name="reg_usuario">Cadastrar</button>
+            </div>
+
+            <p> Já é um membro? <a href="/login"> Fazer Login </a> </p>
+        </form>
+    </body>
+</html>
