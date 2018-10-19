@@ -38,10 +38,10 @@ def cadastro():
         else:
             return render_template('cadastro.html')
     else:
-        usuario = request.form['usuario']
+        usuario = request.form['user']
         email = request.form['email']
         dre = request.form['DRE']
-        senha = request.form['senha_1']
+        senha = request.form['pass']
         user = User(username=usuario, email=email, dre=dre)
         user.set_password(senha)
         db.session.add(user)
