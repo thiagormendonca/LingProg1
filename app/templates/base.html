@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
+    </head>
+
+    <body>
+
+        <div class="header_2">
+            <span><h3 class="nav"> <a class ="a" href="/home"> Início </a> </h3></span>
+            <span><h3 class="nav"> <a class ="a" href="/agendamento"> Agendamento </a> </h3></span>
+            {% if current_user.admin == 1 %}
+            <span><h3 class="nav"> <a class ="a" href="/admin"> Administração </a> </h3></span>
+            {% endif %}
+
+        </div>
+        <br>
+
+        <!-- Parte central do site, class=principal é o texto centralizado -->
+        <div class="centro">
+            <div>
+            <hr class="hr1"/>
+            </div>
+            {% block content %}{% endblock %}
+        </div>
+
+    </body>
+</html>
