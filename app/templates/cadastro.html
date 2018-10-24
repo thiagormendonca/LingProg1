@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Registro</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
+    </head>
+
+    <body>
+        <div class="header">
+            <h1> Cadastro </h1>
+        </div>
+
+        <form method="post" action="/cadastro">
+            <div class="input-group">
+                <label><p class="cent">Usuário</p></label><br>
+                <input type="text" id="usuario" name="user">
+            </div>
+
+            <div class="input-group">
+                <label><p class="cent">Email</p></label><br>
+                <input type="email" id="email" name="email">
+            </div>
+
+            <div class="input-group">
+                <label><p class="cent">DRE</p></label><br>
+                <input type="text" id="DRE" maxlength="9" name="DRE">
+            </div>
+
+            <div class="input-group">
+                <label><p class="cent">Senha</p></label><br>
+                <input type="password" id="senha_1" name="pass">
+            </div>
+
+            <div id="div_senha" class="input-group">
+                <label><p class="cent">Confirmação de senha</p></label><br>
+                <input type="password" id="senha_2" oninput="validaSenha()">
+            </div>
+
+            <div class="input-group">
+                <button type="submit" class="btn" id="reg_usuario">Cadastrar</button>
+            </div>
+
+            <p> Já é um membro? <a href="/login"> Fazer Login </a> </p>
+        </form>
+
+        <script>
+            function validaSenha() {
+                if(document.getElementById("senha_1").value !=document.getElementById("senha_2").value) {
+                    document.getElementById("div_senha").setAttribute("class", "input-group-erro");
+                    document.getElementById("reg_usuario").disabled = true;
+                } else {
+                    document.getElementById("div_senha").setAttribute("class", "input-group");
+                    document.getElementById("reg_usuario").disabled = false;
+                }
+            }
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3 class="erro">Faltaram: {{msg}}</h3>
+
+<div class="principal">
+    {% for agend in agends %}
+    <!-- ADICIONE O FOR AQUI PRA GERAR TANTAS DIV QUANTAS FOREM O NUMERO DE AGENDAMENTOS -->
+    <a href="/admin?dre={{agend.dre}}" class="agen" name="{{DRE}}">
+        <p class="agen_1"> {{agend.dre}} </p><br>
+        <p class="agen_1"> {{agend.horario}} </p><br>
+    </a>
+        {% endfor %}
+        <!-- FIM DO LOOP -->
+
+</div>
+{% endblock %}
