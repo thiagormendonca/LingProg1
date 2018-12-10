@@ -31,11 +31,12 @@ class User(UserMixin, db.Model):
 
 class Horario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    horario = db.Column(db.String(64))
+    hora = db.Column(db.Integer)
+    minuto = db.Column(db.Integer)
     quantidade = db.Column(db.Integer)
 
     def __repr__(self):
-        return '<Horario {}>'.format(self.horario)
+        return '<Horario {}>'.format(self.hora + ":" + self.minuto)
 
     def removeVaga(self):
         self.quantidade = self.quantidade - 1
