@@ -1,7 +1,8 @@
 from flask import render_template, request, redirect, url_for
 from app import app, db
-from flask_login import current_user, login_user, login_required
+from flask_login import current_user, login_user, login_required, logout_user
 from app.models import User, Horario, Agendamento
+from werkzeug.urls import url_parse
 import datetime
 
 @app.route('/')
@@ -65,7 +66,7 @@ def agendamento():
         if not checaagend is None:
             return render_template('agendamento.html', msg='Você já agendou!') 
         horarioselecionado = request.form['horario']
-        horario = Horario.query.filter_by(horario=horarioselecionado).first()
+        horario = Horario.query.filter_by(hora=horarioselecionado[:2]).first()
         horario.removeVaga()
         agendamento = Agendamento(user_id=current_user.id, horario_id=horario.id)
         db.session.add(agendamento)
@@ -81,16 +82,26 @@ def admin():
         for a in agendamentos:
             user = User.query.filter_by(id=a.user_id).first()
             hora = Horario.query.filter_by(id=a.horario_id).first()
-            agends = agends + [ { 'dre': user.dre, 'horario': hora.horario }]
-        agora = str(datetime.datetime.now().hour) + ':' + str(datetime.datetime.now().minute)
+            if hora.minuto == 0:
+                minuto = '00'
+            else:
+                minuto = str(hora.minuto)
+            agends = agends + [ { 'dre': user.dre, 'horario': str(hora.hora) + ":" + minuto }]
+        agorah = datetime.datetime.now().hour
+        agoram = datetime.datetime.now().minute
         msg = 0
-        if datetime.datetime.now().minute > 0:
-            h = Horario.query.filter_by(horario=str(datetime.datetime.now().hour) + ':00').first()
+        if agoram > 0:
+            h = Horario.query.all()
+            for i in h:
+                if i.hora > agorah:
+                    h.remove(i)
             if h is None:
                 msg = 0
             else:
-                a = Agendamento.query.filter_by(horario_id=h.id)
-                msg = len(a)
+                a = 0
+                for i in h:
+                    a = a + Agendamento.query.filter_by(horario_id=i.id).count()
+                msg = a
         return render_template('admin.html', agends=agends, msg=msg)
     else:
         userdre = request.args.get('dre')
@@ -98,3 +109,8 @@ def admin():
         db.session.delete(Agendamento.query.filter_by(user_id=user.id).first())
         db.session.commit()
         return redirect('/admin')
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect('/')
